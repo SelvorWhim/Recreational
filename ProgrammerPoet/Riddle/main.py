@@ -1,5 +1,6 @@
 # main script
 
+import sys
 import time # I am a timelord, the fourth dimension ebbs and flows at my whim
 from riddle1 import riddle_elements
 
@@ -14,14 +15,16 @@ PROMPT2 = "That doesn't look right. Then again, this is a simple program, so it 
 def denumerize_line(line_arr):
     return "".join(chr(n) for n in line_arr)
 
-def present_poem(numerized_poem):
+# line_pause - length of pause between lines in seconds
+def present_poem(numerized_poem, line_pause = 1.5):
     for line_arr in numerized_poem:
-        time.sleep(1.5)
+        time.sleep(line_pause)
         print(denumerize_line(line_arr))
 
 if __name__ == "__main__":
+    line_pause = float(sys.argv[1]) if len(sys.argv) > 1 else 1.5
     print("")
-    present_poem(riddle_elements.NUMERIZED_RIDDLE)
+    present_poem(riddle_elements.NUMERIZED_RIDDLE, line_pause)
     accepted_guesses = [denumerize_line(guess) for guess in riddle_elements.NUMERIZED_ACCEPTED_GUESSES]
     menace = denumerize_line(OFFENDED)
     show_1st_prompt = True
@@ -37,4 +40,4 @@ if __name__ == "__main__":
             print(menace, end="")
             break
     print("")
-    present_poem(riddle_elements.NUMERIZED_ANSWER)
+    present_poem(riddle_elements.NUMERIZED_ANSWER, line_pause)
